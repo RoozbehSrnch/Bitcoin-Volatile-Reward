@@ -7,11 +7,17 @@ Accepted at the ACM Conference on Computer and Communications Security (ACM CCS)
 
 ## What this code does
 
-`main.py` configures a blockchain mining environment (including fee-driven rewards based on mempool statistics), prints a few initial diagnostics (reward ratios and lower-bound profitability), and then launches multi-process A3C training and testing using a shared `ActorCritic` model.
+`main.py` runs the A3C-based tool to analyze Bitcoin mining strategies under a **volatile block-reward model** in which rewards are dominated by **transaction fees**. It parameterizes an environment using **historical mempool statistics** for a specified period, modeling fee dynamics by (i) estimating a time–fee relationship and (ii) updating a mempool state that tracks transaction weight across sat/vByte fee ranges. It first prints baseline comparisons (e.g., honest-mining reward and profitability lower bounds) obtained through the MDP-based analysis and then launches **asynchronous multi-agent training/testing**: multiple worker agents interact with independent environment instances and asynchronously update a shared global **Actor–Critic** network to learn near-optimal adversarial policies (including **selfish mining** and **undercutting**, with undercutting treated as a **continuous-duration** action).   
 
 ## Run
 
-`main.py` runs the A3C-based tool to analyze Bitcoin mining strategies under a **volatile block-reward model** in which rewards are dominated by **transaction fees**. It parameterizes an environment using **historical mempool statistics** for a specified period, modeling fee dynamics by (i) estimating a time–fee relationship and (ii) updating a mempool state that tracks transaction weight across sat/vByte fee ranges. It first prints baseline comparisons (e.g., honest-mining reward and profitability lower bounds) obtained through the MDP-based analysis and then launches **asynchronous multi-agent training/testing**: multiple worker agents interact with independent environment instances and asynchronously update a shared global **Actor–Critic** network to learn near-optimal adversarial policies (including **selfish mining** and **undercutting**, with undercutting treated as a **continuous-duration** action).    
+Requirements:
+
+* Python 3.9+
+* PyTorch (CPU or CUDA)
+
+From the repository root:
+`python main.py` 
 
 
 ## Main files
